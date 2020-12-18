@@ -167,6 +167,8 @@ workflows:
                 - staging
                 - main
       - notify-via-slack:
+          context:
+            - slack-secrets
           filters:
             branches:
               only:

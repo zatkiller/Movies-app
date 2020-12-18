@@ -120,7 +120,7 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - slack/notify:
-          message: " Branch deployment to aws s3 and cloudfront is complete."
+          custom: "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete."
 
 
 workflows:

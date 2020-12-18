@@ -116,13 +116,11 @@ jobs:
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\*
             fi
   notify-via-slack:
-    executor:
-      name: node/default
+    docker:
+      - image: 'cimg/base:stable'
     steps:
-      - checkout
-      - node/install-packages
       - run:
-          command: npm run deploy
+          command: echo "deploy my app"
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1

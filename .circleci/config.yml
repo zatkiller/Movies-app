@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.0
+  node: circleci/node@4.1.0
 
 executors:
   app-executor:
@@ -115,22 +116,19 @@ jobs:
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\*
             fi
   notify-via-slack:
-    docker:
-      - image: 'cimg/base:stable'
+    executor:
+      name: node/default
     steps:
-      - run: echo "deploy my app"
-      - slack/notify:
-          event: fail
-          mentions: '@Dylan'
-          template: basic_fail_1
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run deploy
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
-  test:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - run: echo "test my app"
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
 workflows:
   build_and_deploy:
@@ -172,33 +170,13 @@ workflows:
                 - develop
                 - staging
                 - main
-      - test:
-          requires:
-            - deploy-to-aws-cloudfront    
-      - slack/on-hold:
-          context: slack-secrets
-          filters:
-            tags:
-              only: /^v.*/
-          requires:
-            - test
-      - pause_workflow:
-          filters:
-            tags:
-              only: /^v.*/
-          requires:
-            - test
-            - slack/on-hold
-          type: approval
       - notify-via-slack:
           filters:
-            tags:
-              only: /^v.*/
             branches:
               only:
                 - develop
                 - staging
                 - master
           requires:
-            - pause_workflow
+            - deploy-to-aws-cloudfront    
             

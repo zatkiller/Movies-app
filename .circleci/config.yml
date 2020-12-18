@@ -119,8 +119,6 @@ jobs:
     docker:
       - image: 'cimg/base:stable'
     steps:
-      - run:
-          command: echo "deploy my app"
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
@@ -169,6 +167,8 @@ workflows:
                 - staging
                 - main
       - notify-via-slack:
+          context:
+            - slack-secrets
           filters:
             branches:
               only:

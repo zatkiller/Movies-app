@@ -123,7 +123,21 @@ jobs:
     executor: slack-executor
     steps:
       - slack/notify:
-          custom: "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete."
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*Succesfully deployed to AWS S3 and Cloudfront*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
 
 
 workflows:

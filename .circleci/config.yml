@@ -9,10 +9,6 @@ executors:
     docker:
       - image: circleci/node:12.16.3
     working_directory: ~/repo
-  slack-executor:
-    docker:
-      - image: 'cibuilds/base:latest'
-    resource_class: small
 
 aliases:
   - &show-current-branch-name
@@ -120,7 +116,8 @@ jobs:
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\*
             fi
   notify-via-slack:
-    executor: slack-executor
+    docker:
+      - image: 'cimg/base:stable'
     steps:
       - slack/notify:
           message: "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete."

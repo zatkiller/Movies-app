@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import './Rating.scss';
 
 const Rating = (props) => {
-  const { rating, totalStars } = props;
+  const { rating, totalStars, className } = props;
   const [numberOfStars, setNumberOfStars] = useState();
   const ratingRef = useRef();
 
@@ -23,6 +24,7 @@ const Rating = (props) => {
 
   return (
     <div className="star-rating">
+      <div className={`back-stars ${className}`}></div>
       <div className="back-stars">
         {numberOfStars &&
           numberOfStars.map((i) => (
@@ -30,7 +32,8 @@ const Rating = (props) => {
               <i className="fa fa-star" aria-hidden="true"></i>
             </Fragment>
           ))}
-        <div className="front-stars" ref={ratingRef}>
+
+        <div className={`front-stars ${className}`} ref={ratingRef}>
           {numberOfStars &&
             numberOfStars.map((i) => (
               <Fragment key={i}>
@@ -41,6 +44,12 @@ const Rating = (props) => {
       </div>
     </div>
   );
+};
+
+Rating.propTypes = {
+  rating: PropTypes.number.isRequired,
+  totalStars: PropTypes.number.isRequired,
+  className: PropTypes.string
 };
 
 export default Rating;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import logo from '../../../src/logo.svg';
 
 import './Header.scss';
+import logo from '../../assets/cinema-logo.svg';
 
 const HEADER_LIST = [
   {
@@ -49,7 +50,9 @@ const Header = () => {
       <div className="header-nav-wrapper">
         <div className="header-bar"></div>
         <div className="header-navbar">
-          <div className="header-image">{/* <img src={logo} alt="" /> */}Cinema App</div>
+          <div className="header-image">
+            <img src={logo} alt="" />
+          </div>
           <div className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`} id="header-mobile-menu" onClick={() => toggleMenu()}>
             <span className="bar"></span>
             <span className="bar"></span>

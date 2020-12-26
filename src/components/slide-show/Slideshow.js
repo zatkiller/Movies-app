@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './Slideshow.scss';
 
@@ -23,7 +23,34 @@ const Slideshow = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const { slideShow, slideIndex } = state;
-  // let currentSlideIndex = 0;
+  const [sliderInterval, setSliderInterval] = useState(0);
+
+  // Used to track autosliding
+  let currentSlideIndex = 0;
+
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      autoMoveSlide();
+    }, 5000);
+    setSliderInterval(timeInterval);
+
+    return () => {
+      clearInterval(timeInterval);
+      clearInterval(sliderInterval);
+    };
+  }, []);
+
+  // Automove slides function
+  const autoMoveSlide = () => {
+    let lastIndex = 0;
+    lastIndex = currentSlideIndex + 1;
+    currentSlideIndex = lastIndex >= images.length ? 0 : lastIndex;
+    setState((prev) => ({
+      ...prev,
+      slideIndex: currentSlideIndex,
+      slideShow: images[currentSlideIndex]
+    }));
+  };
 
   // Functon used to change the index of pagination
   const moveSlideWithArrows = (type) => {
@@ -61,7 +88,6 @@ const Slideshow = () => {
     );
   };
 
-  /* eslint-disable */
   const Indicators = (props) => {
     const { currentSlide } = props;
     const listIndicators = images.map((slide, i) => {

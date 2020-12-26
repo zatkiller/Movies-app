@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Grid.scss';
+import Rating from '../rating/Rating';
 
 const Grid = (props) => {
   const { images } = props;
@@ -15,15 +16,11 @@ const Grid = (props) => {
             </div>
             <div className="grid-detail">
               <span className="grid-detail-title">Mission Impossible</span>
-              <div className="grid-detail-rating"></div>
-              <i className="fa fa-star" aria-hidden="true"></i>
-              <i className="fa fa-star" aria-hidden="true"></i>
-              <i className="fa fa-star" aria-hidden="true"></i>
-              <i className="fa fa-star" aria-hidden="true"></i>
-              <i className="fa fa-star" aria-hidden="true"></i>
-              <i className="fa fa-star" aria-hidden="true"></i>
-              &nbsp;&nbsp;
-              <div className="grid-vote-average">4.5</div>
+              <div className="grid-detail-rating">
+                <Rating rating={image.rating} totalStars={5} />
+                &nbsp;&nbsp;
+                <div className="grid-vote-average">{image.rating}</div>
+              </div>
             </div>
           </div>
         </React.Fragment>

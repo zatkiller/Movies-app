@@ -1,19 +1,10 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 
 import './Slideshow.scss';
 
-const Slideshow = () => {
-  const images = [
-    {
-      url: 'https://images.pexels.com/photos/4173624/pexels-photo-4173624.jpeg?cs=srgb&dl=pexels-elijah-o%27donnell-4173624.jpg&fm=jpg'
-    },
-    {
-      url: 'https://images.pexels.com/photos/4004374/pexels-photo-4004374.jpeg?cs=srgb&dl=pexels-evie-shaffer-4004374.jpg&fm=jpg'
-    },
-    {
-      url: 'https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?cs=srgb&dl=pexels-eberhard-grossgasteiger-844297.jpg&fm=jpg'
-    }
-  ];
+const Slideshow = (props) => {
+  const { images, auto, showArrows } = props;
   const [state, setState] = useState({
     slideShow: images[0],
     slideIndex: 0
@@ -29,15 +20,17 @@ const Slideshow = () => {
   let currentSlideIndex = 0;
 
   useEffect(() => {
-    const timeInterval = setInterval(() => {
-      autoMoveSlide();
-    }, 5000);
-    setSliderInterval(timeInterval);
+    if (auto) {
+      const timeInterval = setInterval(() => {
+        autoMoveSlide();
+      }, 5000);
+      setSliderInterval(timeInterval);
 
-    return () => {
-      clearInterval(timeInterval);
-      clearInterval(sliderInterval);
-    };
+      return () => {
+        clearInterval(timeInterval);
+        clearInterval(sliderInterval);
+      };
+    }
   }, []);
 
   // Automove slides function
@@ -45,6 +38,9 @@ const Slideshow = () => {
     let lastIndex = 0;
     lastIndex = currentSlideIndex + 1;
     currentSlideIndex = lastIndex >= images.length ? 0 : lastIndex;
+
+    // No need prev state snapshopt actually but just using it
+    // to remember this method exists
     setState((prev) => ({
       ...prev,
       slideIndex: currentSlideIndex,
@@ -102,7 +98,7 @@ const Slideshow = () => {
       <div className="slider-slides">
         {images && images.length && slideShow && <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>}
         <Indicators currentSlide={slideIndex} />
-        <RenderArrows />
+        {showArrows ? <RenderArrows /> : null}
       </div>
     </div>
   );

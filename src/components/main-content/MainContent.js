@@ -1,7 +1,8 @@
 import React from 'react';
-import Slideshow from '../slide-show/Slideshow';
 
 import './MainContent.scss';
+import Slideshow from '../slide-show/Slideshow';
+import Paginate from '../paginate/Paginate';
 
 const MainContent = () => {
   const images = [
@@ -21,7 +22,9 @@ const MainContent = () => {
       <Slideshow images={images} auto={true} showArrows={true} />
       <div className="grid-movie-title">
         <div className="movieType">Now Playing</div>
-        <div className="paginate">Paginate</div>
+        <div className="paginate">
+          <Paginate />
+        </div>
       </div>
     </div>
   );

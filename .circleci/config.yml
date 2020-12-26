@@ -188,7 +188,7 @@ workflows:
               only:
                 - develop
                 - staging
-                - master
+                - main
           requires:
             - deploy-to-aws-cloudfront    
             

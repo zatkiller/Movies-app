@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import './Paginate.scss';
 
@@ -25,6 +26,12 @@ const Paginate = (props) => {
       </button>
     </>
   );
+};
+
+Paginate.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  paginate: PropTypes.func.isRequired
 };
 
 export default Paginate;

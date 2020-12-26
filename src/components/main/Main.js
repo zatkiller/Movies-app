@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainContent from '../content/main-content/MainContent';
+import MainContent from '../main-content/MainContent';
 
 const Main = () => {
   return (

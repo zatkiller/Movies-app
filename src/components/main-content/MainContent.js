@@ -21,7 +21,7 @@ const MainContent = () => {
     },
     {
       url: 'https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg',
-      rating: 5
+      rating: 10
     },
     {
       url: 'https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?cs=srgb&dl=pexels-emiliano-arano-1295138.jpg&fm=jpg',

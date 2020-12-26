@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './MainContent.scss';
 import Slideshow from '../slide-show/Slideshow';
 import Paginate from '../paginate/Paginate';
+import Grid from '../grid/Grid';
 
 const MainContent = () => {
   const images = [
@@ -14,6 +15,12 @@ const MainContent = () => {
     },
     {
       url: 'https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?cs=srgb&dl=pexels-eberhard-grossgasteiger-844297.jpg&fm=jpg'
+    },
+    {
+      url: 'https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?cs=srgb&dl=pexels-simon-migaj-747964.jpg&fm=jpg'
+    },
+    {
+      url: 'https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?cs=srgb&dl=pexels-emiliano-arano-1295138.jpg&fm=jpg'
     }
   ];
 
@@ -36,6 +43,7 @@ const MainContent = () => {
           <Paginate currentPage={currentPage} totalPages={10} paginate={paginate} />
         </div>
       </div>
+      <Grid images={images} />
     </div>
   );
 };

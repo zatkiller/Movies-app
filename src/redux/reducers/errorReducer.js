@@ -1,6 +1,6 @@
 import { SET_ERROR } from '../types';
 
-const initialState = 'Empty';
+const initialState = '';
 
 export default (state = initialState, action) => {
   switch (action.type) {

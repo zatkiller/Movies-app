@@ -4,7 +4,7 @@ import { connect } from 'react-redux'; // Connect react component to the redux s
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
-import { getMovies } from '../../redux/actions/movies';
+import { getMovies, setResponsePageNumber } from '../../redux/actions/movies';
 import PropTypes from 'prop-types';
 
 const HEADER_LIST = [
@@ -35,13 +35,17 @@ const HEADER_LIST = [
 ];
 
 const Header = (props) => {
-  const { getMovies } = props;
+  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber } = props;
   const [navClass, setNavClass] = useState(false);
   const [menuClass, setMenuClass] = useState(false);
 
   useEffect(() => {
     getMovies('now_playing', 1);
   }, []);
+
+  const setMovieTypeUrl = (type, name) => {
+    console.log(type, name);
+  };
 
   const toggleMenu = () => {
     setNavClass(!navClass);
@@ -68,7 +72,7 @@ const Header = (props) => {
           </div>
           <ul className={`${navClass ? 'header-nav header-mobile-nav' : 'header-nav'}`}>
             {HEADER_LIST.map((data) => (
-              <li key={data.id} className="header-nav-item">
+              <li key={data.id} className="header-nav-item" onClick={() => setMovieTypeUrl(data.type, data.name)}>
                 <span className="header-list-name">
                   <i className={data.iconClass}></i>
                 </span>
@@ -83,15 +87,23 @@ const Header = (props) => {
     </>
   );
 };
+
 Header.propTypes = {
-  getMovies: PropTypes.func
+  getMovies: PropTypes.func,
+  setMovieType: PropTypes.func,
+  setResponsePageNumber: PropTypes.func,
+  page: PropTypes.number,
+  totalPages: PropTypes.number,
+  list: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
-  list: state.movies.list
+  list: state.movies.list,
+  page: state.movies.page,
+  totalPages: state.movies.totalPages
 });
 
 export default connect(
   mapStateToProps,
-  { getMovies } // This makes getMovies available as a prop within the component, params here are for dispatch actions
+  { getMovies, setResponsePageNumber } // This makes getMovies available as a prop within the component, params here are for dispatch actions
 )(Header);

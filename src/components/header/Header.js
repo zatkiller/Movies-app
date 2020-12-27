@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 // import logo from '../../../src/logo.svg';
+import { connect } from 'react-redux'; // Connect react component to the redux store
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
+import { getMovies } from '../../redux/actions/movies';
+import PropTypes from 'prop-types';
 
 const HEADER_LIST = [
   {
@@ -31,12 +34,13 @@ const HEADER_LIST = [
   }
 ];
 
-const Header = () => {
+const Header = (props) => {
+  const { getMovies } = props;
   const [navClass, setNavClass] = useState(false);
   const [menuClass, setMenuClass] = useState(false);
 
   useEffect(() => {
-
+    getMovies('now_playing', 1);
   }, []);
 
   const toggleMenu = () => {
@@ -79,5 +83,15 @@ const Header = () => {
     </>
   );
 };
+Header.propTypes = {
+  getMovies: PropTypes.func
+};
 
-export default Header;
+const mapStateToProps = (state) => ({
+  list: state.movies.list
+});
+
+export default connect(
+  mapStateToProps,
+  { getMovies } // This makes getMovies available as a prop within the component, params here are for dispatch actions
+)(Header);

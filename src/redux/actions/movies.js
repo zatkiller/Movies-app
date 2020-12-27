@@ -8,7 +8,7 @@ export const getMovies = (type, pageNumber) => async (dispatch) => {
     dispatchMethod(MOVIE_LIST, results, dispatch);
   } catch (err) {
     if (err.response) {
-      dispatchMethod(SET_ERROR, error.response.data.message, dispatch);
+      dispatchMethod(SET_ERROR, err.response.data.message, dispatch);
     }
   }
 };

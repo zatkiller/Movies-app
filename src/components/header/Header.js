@@ -80,7 +80,7 @@ const Header = (props) => {
                   <i className={data.iconClass}></i>
                 </span>
                 &nbsp;
-                <span className="header-list-name">{data.type}</span>
+                <span className="header-list-name">{data.name}</span>
               </li>
             ))}
             <input className="search-input" type="text" placeholder="Search for a movie" />

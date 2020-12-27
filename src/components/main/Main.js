@@ -6,8 +6,10 @@ import { loadMoreMovies, setResponsePageNumber } from '../../redux/actions/movie
 import MainContent from '../main-content/MainContent';
 import Spinner from '../spinner/Spinner';
 
+import './Main.scss';
+
 const Main = (props) => {
-  const { loadMoreMovies, page, totalPages } = props;
+  const { loadMoreMovies, page, totalPages, setResponsePageNumber } = props;
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(page);
   const mainRef = useRef();
@@ -22,7 +24,7 @@ const Main = (props) => {
 
   useEffect(() => {
     setResponsePageNumber(currentPage, totalPages);
-    loadMoreMovies('now_playing', 1);
+    loadMoreMovies('now_playing', currentPage);
   }, [currentPage]);
 
   const handleScroll = () => {
@@ -35,10 +37,8 @@ const Main = (props) => {
   };
 
   const fetchData = () => {
-    let pageNumber = currentPage;
     if (page < totalPages) {
-      pageNumber += 1;
-      setCurrentPage(pageNumber);
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
@@ -59,7 +59,9 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  list: state.movies.list
+  list: state.movies.list,
+  page: state.movies.page,
+  totalPages: state.movies.totalPages
 });
 
-export default connect(mapStateToProps, { loadMoreMovies })(Main);
+export default connect(mapStateToProps, { loadMoreMovies, setResponsePageNumber })(Main);

@@ -31,6 +31,7 @@ export const setResponsePageNumber = (page, totalPages) => async (dispatch) => {
   const payload = { page, totalPages };
   dispatchMethod(RESPONSE_PAGE, payload, dispatch);
 };
+
 const dispatchMethod = (type, payload, dispatch) => {
   // Redux Thunk uses the disaptch syntax to update the store
   dispatch({ type, payload });

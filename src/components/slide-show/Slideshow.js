@@ -11,20 +11,26 @@ const Slideshow = (props) => {
     slideIndex: 0
   });
 
-  // This will be used to check track current index of pagination
+  // This will be used to check track current index of slide
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [sliderInterval, setSliderInterval] = useState(0);
 
   const { slideShow, slideIndex } = state;
-  const [sliderInterval, setSliderInterval] = useState(0);
 
   // Used to track autosliding
   let currentSlideIndex = 0;
 
   useEffect(() => {
+    //Set first image straight away
+    setState({
+      ...state,
+      slideIndex: 0,
+      slideShow: images[0]
+    });
     if (auto) {
       const timeInterval = setInterval(() => {
         autoMoveSlide();
-      }, 5000);
+      }, 8000);
       setSliderInterval(timeInterval);
 
       return () => {
@@ -32,7 +38,7 @@ const Slideshow = (props) => {
         clearInterval(sliderInterval);
       };
     }
-  }, []);
+  }, [images]);
 
   // Automove slides function
   const autoMoveSlide = () => {
@@ -65,14 +71,13 @@ const Slideshow = (props) => {
       if (index === images.length) {
         index = 0;
       }
-    }
-    setCurrentIndex(index);
-    // prev refer to previous state values
+    } // prev refer to previous state values
     setState((prev) => ({
       ...prev,
       slideIndex: index,
       slideShow: images[index]
     }));
+    setCurrentIndex(index);
   };
 
   // Render the pagination arrows

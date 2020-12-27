@@ -11,12 +11,12 @@ import LazyImage from '../lazy-image/LazyImage';
 import { IMAGE_URL } from '../../services/movies.service';
 
 const SearchResult = (props) => {
-  const { list, SearchResult, searchQuery } = props;
+  const { searchResult, searchQuery } = props;
   const [movieData, setMovieData] = useState([]);
 
   useEffect(() => {
-    setMovieData(list);
-  }, [list]);
+    setMovieData(searchResult);
+  }, [searchResult]);
 
   return (
     <div className="searchKeyword">
@@ -26,19 +26,21 @@ const SearchResult = (props) => {
       <div className="grid">
         {movieData.map((data, i) => (
           <Fragment key={uuidv4()}>
-            <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
-              <div className="grid-read-more">
-                <button className="grid-cell-button">Read More</button>
-              </div>
-              <div className="grid-detail">
-                <span className="grid-detail-title">{data.title}</span>
-                <div className="grid-detail-rating">
-                  <Rating rating={data.vote_average} totalStars={10} />
-                  &nbsp;&nbsp;
-                  <div className="grid-vote-average">{data.rating}</div>
+            {data.poster_path && (
+              <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
+                <div className="grid-read-more">
+                  <button className="grid-cell-button">Read More</button>
                 </div>
-              </div>
-            </LazyImage>
+                <div className="grid-detail">
+                  <span className="grid-detail-title">{data.title}</span>
+                  <div className="grid-detail-rating">
+                    <Rating rating={data.vote_average} totalStars={10} />
+                    &nbsp;&nbsp;
+                    <div className="grid-vote-average">{data.rating}</div>
+                  </div>
+                </div>
+              </LazyImage>
+            )}
           </Fragment>
         ))}
       </div>

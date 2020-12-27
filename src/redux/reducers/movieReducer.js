@@ -34,6 +34,7 @@ export default (state = initialState, action) => {
         movieType: action.payload
       };
     case SEARCH_RESULT:
+      console.log(state.searchResult);
       return {
         ...state,
         searchResult: action.payload

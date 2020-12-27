@@ -9,9 +9,10 @@ import Grid from '../grid/Grid';
 import PropTypes from 'prop-types';
 
 import { IMAGE_URL } from '../../services/movies.service';
+import { getMovies, setResponsePageNumber } from '../../redux/actions/movies';
 
 const MainContent = (props) => {
-  const { list, movieType, page, totalPages } = props;
+  const { list, movieType, page, totalPages, getMovies, setResponsePageNumber } = props;
 
   const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState([]);
@@ -49,12 +50,20 @@ const MainContent = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(page);
+  }, [page, totalPages]);
+
   const paginate = (type) => {
-    if (type === 'prev' && currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
+    let pageNumber = currentPage;
+    if (type === 'prev' && currentPage >= 1) {
+      pageNumber -= 1;
     } else {
-      setCurrentPage((prev) => prev + 1);
+      pageNumber += 1;
     }
+    setCurrentPage(pageNumber);
+    setResponsePageNumber(pageNumber, totalPages);
+    getMovies(movieType, pageNumber);
   };
 
   return (
@@ -75,7 +84,9 @@ MainContent.propTypes = {
   list: PropTypes.array.isRequired,
   movieType: PropTypes.string.isRequired,
   totalPages: PropTypes.number.isRequired,
-  page: PropTypes.number.isRequired
+  page: PropTypes.number.isRequired,
+  getMovies: PropTypes.func.isRequired,
+  setResponsePageNumber: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -85,4 +96,4 @@ const mapStateToProps = (state) => ({
   page: state.movies.page
 });
 
-export default connect(mapStateToProps, {})(MainContent);
+export default connect(mapStateToProps, { getMovies, setResponsePageNumber })(MainContent);

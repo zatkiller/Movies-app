@@ -11,13 +11,18 @@ import PropTypes from 'prop-types';
 import { IMAGE_URL } from '../../services/movies.service';
 
 const MainContent = (props) => {
-  const { list, movieType } = props;
+  const { list, movieType, page, totalPages } = props;
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState([]);
+  const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4); // Randomize the order of movies obtained, randomly get 4
 
-  // Randomize the order of movies obtained, randomly get 4
-  const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4);
+  const HEADER_TYPE = {
+    now_playing: 'Now Playing',
+    popular: 'Popular',
+    top_rated: 'Top Rated',
+    upcoming: 'Upcoming'
+  };
 
   useEffect(() => {
     console.log(list);
@@ -56,9 +61,9 @@ const MainContent = (props) => {
     <div className="main-content">
       <Slideshow images={images} auto={true} showArrows={true} />
       <div className="grid-movie-title">
-        <div className="movieType">{movieType}</div>
+        <div className="movieType">{HEADER_TYPE[movieType]}</div>
         <div className="paginate">
-          <Paginate currentPage={currentPage} totalPages={10} paginate={paginate} />
+          <Paginate currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
         </div>
       </div>
       <Grid />
@@ -68,12 +73,16 @@ const MainContent = (props) => {
 
 MainContent.propTypes = {
   list: PropTypes.array.isRequired,
-  movieType: PropTypes.string.isRequired
+  movieType: PropTypes.string.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => ({
   list: state.movies.list,
-  movieType: state.movies.movieType
+  movieType: state.movies.movieType,
+  totalPages: state.movies.totalPages,
+  page: state.movies.page
 });
 
 export default connect(mapStateToProps, {})(MainContent);

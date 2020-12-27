@@ -45,7 +45,7 @@ const Header = (props) => {
     setResponsePageNumber(page, totalPages);
   }, [type]);
 
-  const setMovieTypeUrl = (type, name) => {
+  const setMovieTypeUrl = (type) => {
     setType(type);
     setMovieType(name);
   };
@@ -75,12 +75,12 @@ const Header = (props) => {
           </div>
           <ul className={`${navClass ? 'header-nav header-mobile-nav' : 'header-nav'}`}>
             {HEADER_LIST.map((data) => (
-              <li key={data.id} className={data.type === type ? 'header-nav-item active-item' : 'header-nav-item'} onClick={() => setMovieTypeUrl(data.type, data.name)}>
+              <li key={data.id} className={data.type === type ? 'header-nav-item active-item' : 'header-nav-item'} onClick={() => setMovieTypeUrl(data.type)}>
                 <span className="header-list-name">
                   <i className={data.iconClass}></i>
                 </span>
                 &nbsp;
-                <span className="header-list-name">{data.name}</span>
+                <span className="header-list-name">{data.type}</span>
               </li>
             ))}
             <input className="search-input" type="text" placeholder="Search for a movie" />

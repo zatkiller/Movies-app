@@ -1,27 +1,22 @@
+/* eslint-disable */
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import '../grid/Grid.scss';
 import './SearchResult.scss';
 import Rating from '../rating/Rating';
-import { IMAGE_URL } from '../../services/movies.service';
 import LazyImage from '../lazy-image/LazyImage';
 
+import { IMAGE_URL } from '../../services/movies.service';
+
 const SearchResult = (props) => {
-  const { searchResult, searchQuery } = props;
+  const { list, SearchResult, searchQuery } = props;
   const [movieData, setMovieData] = useState([]);
 
   useEffect(() => {
-    setMovieData(searchResult);
-  }, [searchResult]);
-
-  const formatMovieTitle = (title) => {
-    const titleStr = title.toLowerCase();
-    return titleStr.replace(/ /g, '-');
-  };
+    setMovieData(list);
+  }, [list]);
 
   return (
     <div className="searchKeyword">
@@ -29,25 +24,21 @@ const SearchResult = (props) => {
         <span className="grid-text1">Your search keyword:</span> <span className="grid-text2">{searchQuery}</span>
       </div>
       <div className="grid">
-        {movieData.map((data) => (
+        {movieData.map((data, i) => (
           <Fragment key={uuidv4()}>
-            {data.poster_path && (
-              <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
-                <div className="grid-read-more">
-                  <button className="grid-cell-button">
-                    <Link to={`/${data.id}/${formatMovieTitle(data.title)}/details`}>Read More</Link>
-                  </button>
+            <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
+              <div className="grid-read-more">
+                <button className="grid-cell-button">Read More</button>
+              </div>
+              <div className="grid-detail">
+                <span className="grid-detail-title">{data.title}</span>
+                <div className="grid-detail-rating">
+                  <Rating rating={data.vote_average} totalStars={10} />
+                  &nbsp;&nbsp;
+                  <div className="grid-vote-average">{data.rating}</div>
                 </div>
-                <div className="grid-detail">
-                  <span className="grid-detail-title">{data.title}</span>
-                  <div className="grid-detail-rating">
-                    <Rating rating={data.vote_average} totalStars={10} />
-                    &nbsp;&nbsp;
-                    <div className="grid-vote-average">{data.vote_average}</div>
-                  </div>
-                </div>
-              </LazyImage>
-            )}
+              </div>
+            </LazyImage>
           </Fragment>
         ))}
       </div>

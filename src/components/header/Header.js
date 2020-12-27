@@ -4,7 +4,7 @@ import { connect } from 'react-redux'; // Connect react component to the redux s
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
-import { getMovies, setResponsePageNumber } from '../../redux/actions/movies';
+import { getMovies, setMovieType, setResponsePageNumber } from '../../redux/actions/movies';
 import PropTypes from 'prop-types';
 
 const HEADER_LIST = [
@@ -38,13 +38,16 @@ const Header = (props) => {
   const { getMovies, setMovieType, page, totalPages, setResponsePageNumber } = props;
   const [navClass, setNavClass] = useState(false);
   const [menuClass, setMenuClass] = useState(false);
+  const [type, setType] = useState('now_playing');
 
   useEffect(() => {
-    getMovies('now_playing', 1);
-  }, []);
+    getMovies(type, page);
+    setResponsePageNumber(page, totalPages);
+  }, [type]);
 
   const setMovieTypeUrl = (type, name) => {
-    console.log(type, name);
+    setType(type);
+    setMovieType(name);
   };
 
   const toggleMenu = () => {
@@ -105,5 +108,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getMovies, setResponsePageNumber } // This makes getMovies available as a prop within the component, params here are for dispatch actions
+  { getMovies, setMovieType, setResponsePageNumber } // This makes getMovies available as a prop within the component, params here are for dispatch actions
 )(Header);

@@ -75,7 +75,7 @@ const Header = (props) => {
           </div>
           <ul className={`${navClass ? 'header-nav header-mobile-nav' : 'header-nav'}`}>
             {HEADER_LIST.map((data) => (
-              <li key={data.id} className="header-nav-item" onClick={() => setMovieTypeUrl(data.type, data.name)}>
+              <li key={data.id} className={data.type === type ? 'header-nav-item active-item' : 'header-nav-item'} onClick={() => setMovieTypeUrl(data.type, data.name)}>
                 <span className="header-list-name">
                   <i className={data.iconClass}></i>
                 </span>

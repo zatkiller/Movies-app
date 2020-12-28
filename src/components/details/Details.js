@@ -2,6 +2,11 @@ import React from 'react';
 
 import './Details.scss';
 import Rating from '../rating/Rating';
+import Tabs from './tabs/Tabs';
+import Overview from './overview/Overview';
+import Crew from './crew/Crew';
+import Media from './media/Media';
+import Review from './reviews/Reviews';
 
 const Details = () => {
   return (
@@ -35,6 +40,20 @@ const Details = () => {
                 &nbsp;
                 <span>6.5</span> <p>(200) reviews</p>
               </div>
+              <Tabs>
+                <div label="Overview">
+                  <Overview />
+                </div>
+                <div label="Crew">
+                  <Crew />
+                </div>
+                <div label="Media">
+                  <Media />
+                </div>
+                <div label="Review">
+                  <Review />
+                </div>
+              </Tabs>
             </div>
           </div>
         </div>

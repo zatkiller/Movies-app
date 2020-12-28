@@ -131,7 +131,7 @@ jobs:
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "*${CIRCLE_BRANCH} Branch succesfully deployed to AWS S3 and Cloudfront*",
+                      "text": ""${CIRCLE_BRANCH}"" Branch succesfully deployed to AWS S3 and Cloudfront",
                       "emoji": true
                     }
                   ]

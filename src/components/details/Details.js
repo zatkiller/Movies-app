@@ -4,6 +4,8 @@ import './Details.scss';
 import Rating from '../rating/Rating';
 import Tabs from './tabs/Tabs';
 import Overview from './overview/Overview';
+import Crew from './crew/Crew';
+import Media from './media/Media';
 
 const Details = () => {
   return (
@@ -41,8 +43,12 @@ const Details = () => {
                 <div label="Overview">
                   <Overview />
                 </div>
-                <div label="Crew">Crew Component</div>
-                <div label="Media">Media Component</div>
+                <div label="Crew">
+                  <Crew />
+                </div>
+                <div label="Media">
+                  <Media />
+                </div>
                 <div label="Review">Review Component</div>
               </Tabs>
             </div>

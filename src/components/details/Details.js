@@ -6,6 +6,7 @@ import Tabs from './tabs/Tabs';
 import Overview from './overview/Overview';
 import Crew from './crew/Crew';
 import Media from './media/Media';
+import Review from './reviews/Reviews';
 
 const Details = () => {
   return (
@@ -49,7 +50,9 @@ const Details = () => {
                 <div label="Media">
                   <Media />
                 </div>
-                <div label="Review">Review Component</div>
+                <div label="Review">
+                  <Review />
+                </div>
               </Tabs>
             </div>
           </div>

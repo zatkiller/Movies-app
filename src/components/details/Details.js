@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Details.scss';
 import Rating from '../rating/Rating';
+import Tabs from './tabs/Tabs';
 
 const Details = () => {
   return (
@@ -35,6 +36,12 @@ const Details = () => {
                 &nbsp;
                 <span>6.5</span> <p>(200) reviews</p>
               </div>
+              <Tabs>
+                <div label="Overview">Overview Component</div>
+                <div label="Crew">Crew Component</div>
+                <div label="Media">Media Component</div>
+                <div label="Review">Review Component</div>
+              </Tabs>
             </div>
           </div>
         </div>

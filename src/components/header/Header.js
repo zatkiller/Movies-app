@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 // import logo from '../../../src/logo.svg';
 import { connect } from 'react-redux'; // Connect react component to the redux store
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
 import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult } from '../../redux/actions/movies';
-import PropTypes from 'prop-types';
 
 const HEADER_LIST = [
   {
@@ -41,6 +42,12 @@ const Header = (props) => {
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
 
+  const history = useHistory();
+
+  const navigateToMainPage = () => {
+    history.push('/');
+  };
+
   useEffect(() => {
     getMovies(type, page);
     setResponsePageNumber(page, totalPages);
@@ -72,7 +79,7 @@ const Header = (props) => {
       <div className="header-nav-wrapper">
         <div className="header-bar"></div>
         <div className="header-navbar">
-          <div className="header-image">
+          <div className="header-image" onClick={() => navigateToMainPage()}>
             <img src={logo} alt="" />
           </div>
           <div className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`} id="header-mobile-menu" onClick={() => toggleMenu()}>

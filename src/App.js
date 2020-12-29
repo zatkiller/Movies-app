@@ -9,6 +9,7 @@ import store from './redux/store';
 import Header from './components/header/Header';
 import Main from './components/main/Main';
 import Details from './components/details/Details';
+import ErrorPage from './components/error/ErrorPage';
 
 // Router
 // Switch is when you have more than 1 route
@@ -22,6 +23,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/:id/:name/details" component={Details} />
+            <Route path="*" component={ErrorPage} />
           </Switch>
         </div>
       </Router>

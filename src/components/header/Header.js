@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
-import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult } from '../../redux/actions/movies';
+import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } from '../../redux/actions/movies';
 
 const HEADER_LIST = [
   {
@@ -36,7 +36,7 @@ const HEADER_LIST = [
 ];
 
 const Header = (props) => {
-  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber, searchQuery, searchResult } = props;
+  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } = props;
   const [navClass, setNavClass] = useState(false);
   const [menuClass, setMenuClass] = useState(false);
   const [type, setType] = useState('now_playing');
@@ -45,6 +45,7 @@ const Header = (props) => {
   const history = useHistory();
 
   const navigateToMainPage = () => {
+    clearMovieDetails();
     history.push('/');
   };
 
@@ -113,16 +114,16 @@ Header.propTypes = {
   totalPages: PropTypes.number,
   list: PropTypes.array,
   searchQuery: PropTypes.func,
-  searchResult: PropTypes.func
+  searchResult: PropTypes.func,
+  clearMovieDetails: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  list: state.movies.list,
   page: state.movies.page,
   totalPages: state.movies.totalPages
 });
 
 export default connect(
   mapStateToProps,
-  { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult } // This makes getMovies available as a prop within the component, params here are for dispatch actions
+  { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } // This makes getMovies available as a prop within the component, params here are for dispatch actions
 )(Header);

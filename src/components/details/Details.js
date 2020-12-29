@@ -38,19 +38,19 @@ const Details = (props) => {
             <div className="movie-body">
               <div className="movie-overview">
                 <div className="title">
-                  Avengers <span>2020-12-03</span>
+                  {details.title} <span>{details.release_date}</span>
                 </div>
                 <div className="movie-genres">
                   <ul className="genres">
-                    <li>Action</li>
-                    <li>Comedy</li>
-                    <li>Sci-fi</li>
+                    {details.genres.map((genre) => (
+                      <li key={genre.id}>{genre.name}</li>
+                    ))}
                   </ul>
                 </div>
                 <div className="rating">
                   <Rating className="rating-stars" rating={6.5} totalStars={10} />
                   &nbsp;
-                  <span>6.5</span> <p>(200) reviews</p>
+                  <span>{details.vote_average}</span> <p>({details.vote_count}) reviews</p>
                 </div>
                 <Tabs>
                   <div label="Overview">

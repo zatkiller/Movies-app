@@ -14,6 +14,7 @@ App is hosted on AWS (Using S3 Bucket and Cloudfront)
 Integrated CircleCI to for CI/CD and integrated CircleCI Slack Notifications
 
 Screenshots:
+
 CircleCI:
 
 CircleCI Pipeline:

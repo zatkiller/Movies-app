@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 // import logo from '../../../src/logo.svg';
 import { connect } from 'react-redux'; // Connect react component to the redux store
+import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
-import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult } from '../../redux/actions/movies';
-import PropTypes from 'prop-types';
+import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } from '../../redux/actions/movies';
 
 const HEADER_LIST = [
   {
@@ -35,16 +36,30 @@ const HEADER_LIST = [
 ];
 
 const Header = (props) => {
-  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber, searchQuery, searchResult } = props;
+  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } = props;
   const [navClass, setNavClass] = useState(false);
   const [menuClass, setMenuClass] = useState(false);
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
+  const [disableSearch, setDisableSearch] = useState(false);
+
+  const history = useHistory();
+  const location = useLocation();
+
+  const navigateToMainPage = () => {
+    setDisableSearch(false);
+    clearMovieDetails();
+    history.push('/');
+  };
 
   useEffect(() => {
     getMovies(type, page);
     setResponsePageNumber(page, totalPages);
-  }, [type]);
+
+    if (location.pathname !== '/' && location.key) {
+      setDisableSearch(true);
+    }
+  }, [type, disableSearch, location]);
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -53,8 +68,16 @@ const Header = (props) => {
   };
 
   const setMovieTypeUrl = (type) => {
-    setType(type);
-    setMovieType(name);
+    setDisableSearch(false);
+    if (location.pathname !== '/') {
+      clearMovieDetails();
+      history.push('/');
+      setType(type);
+      setMovieType(type);
+    } else {
+      setType(type);
+      setMovieType(type);
+    }
   };
 
   const toggleMenu = () => {
@@ -72,7 +95,7 @@ const Header = (props) => {
       <div className="header-nav-wrapper">
         <div className="header-bar"></div>
         <div className="header-navbar">
-          <div className="header-image">
+          <div className="header-image" onClick={() => navigateToMainPage()}>
             <img src={logo} alt="" />
           </div>
           <div className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`} id="header-mobile-menu" onClick={() => toggleMenu()}>
@@ -90,7 +113,7 @@ const Header = (props) => {
                 <span className="header-list-name">{data.name}</span>
               </li>
             ))}
-            <input className="search-input" type="text" placeholder="Search for a movie" value={search} onChange={onSearchChange} />
+            <input className={`search-input ${disableSearch ? 'disabled' : ''}`} type="text" placeholder="Search for a movie" value={search} onChange={onSearchChange} />
           </ul>
         </div>
       </div>
@@ -106,16 +129,16 @@ Header.propTypes = {
   totalPages: PropTypes.number,
   list: PropTypes.array,
   searchQuery: PropTypes.func,
-  searchResult: PropTypes.func
+  searchResult: PropTypes.func,
+  clearMovieDetails: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  list: state.movies.list,
   page: state.movies.page,
   totalPages: state.movies.totalPages
 });
 
 export default connect(
   mapStateToProps,
-  { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult } // This makes getMovies available as a prop within the component, params here are for dispatch actions
+  { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } // This makes getMovies available as a prop within the component, params here are for dispatch actions
 )(Header);

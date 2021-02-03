@@ -24,7 +24,7 @@ const Grid = (props) => {
     const titleStr = title.toLowerCase();
 
     //Replace all spaces with -
-    return titleStr.replace(/ /g, '-');
+    return encodeURIComponent(titleStr.replace(/ /g, '-'));
   };
 
   return (

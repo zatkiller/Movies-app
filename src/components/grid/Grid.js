@@ -22,9 +22,8 @@ const Grid = (props) => {
   //To replace string format in url to lower case
   const formatMovieTitle = (title) => {
     const titleStr = title.toLowerCase();
-
     //Replace all spaces with -
-    return titleStr.replace(/ /g, '-');
+    return encodeURIComponent(titleStr.replace(/ /g, '-'));
   };
 
   return (

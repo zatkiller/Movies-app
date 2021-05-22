@@ -1,4 +1,4 @@
-### Movies App
+### Latest Movies
 
 Link: https://d2d6cb7kql6u79.cloudfront.net/
 
